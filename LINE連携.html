@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LINE連携 - Kuro AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* 共通スタイル継承 */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body { background: #050505; color: white; overflow-x: hidden; line-height: 1.6; }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 8%;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; }
+    .logo img { width: 40px; height: 40px; border-radius: 10px; background: white; padding: 2px; }
+    .logo h1 { font-size: 20px; font-weight: 900; }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 80px 8%; }
+
+    .sub-hero { text-align: center; margin-bottom: 100px; }
+    .sub-hero h2 { font-size: 58px; font-weight: 900; letter-spacing: -2px; margin-bottom: 24px; }
+    .sub-hero p { color: rgba(255,255,255,0.6); font-size: 20px; }
+
+    /* ステップ解説セクション */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      margin-bottom: 120px;
+    }
+
+    .step-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 40px;
+      border-radius: 32px;
+      position: relative;
+    }
+
+    .step-num {
+      position: absolute;
+      top: -20px;
+      left: 40px;
+      background: white;
+      color: black;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+    }
+
+    .step-card h3 { font-size: 24px; margin-bottom: 16px; margin-top: 10px; }
+    .step-card p { color: rgba(255,255,255,0.6); }
+
+    /* 機能詳細（デモ画面風） */
+    .demo-section {
+      background: rgba(255,255,255,0.03);
+      border-radius: 48px;
+      padding: 60px;
+      margin-bottom: 120px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .demo-text h3 { font-size: 36px; margin-bottom: 20px; font-weight: 800; }
+    .demo-text ul { list-style: none; }
+    .demo-text li {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(255,255,255,0.8);
+    }
+    .demo-text li::before { content: "✓"; color: #00ff88; font-weight: bold; }
+
+    /* QRコードセクション */
+    .qr-box {
+      text-align: center;
+      background: white;
+      color: black;
+      padding: 60px;
+      border-radius: 48px;
+      margin-bottom: 80px;
+    }
+
+    .qr-box h3 { font-size: 32px; margin-bottom: 10px; }
+    .qr-placeholder {
+      width: 200px;
+      height: 200px;
+      background: #eee;
+      margin: 30px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #000;
+      font-weight: bold;
+    }
+
+    .btn-line {
+      display: inline-block;
+      background: #06C755; /* LINEカラー */
+      color: white;
+      padding: 20px 40px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 18px;
+      transition: .3s;
+    }
+    .btn-line:hover { transform: scale(1.05); filter: brightness(1.1); }
+
+    footer { text-align: center; padding: 60px; border-top: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.4); }
+
+    @media (max-width: 800px) {
+      .demo-grid { grid-template-columns: 1fr; }
+      .sub-hero h2 { font-size: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">
+    <img src="kuro-icon.png" alt="Kuro AI">
+    <h1>Kuro AI</h1>
+  </a>
+</header>
+
+<div class="container">
+  <section class="sub-hero">
+    <h2>LINEで、<br>AIをもっと身近に。</h2>
+    <p>専用アプリは不要。いつものトーク画面が、<br>あなたのパーソナルアシスタントになります。</p>
+  </section>
+
+  <section class="steps">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h3>友だち追加</h3>
+      <p>下のボタン、またはQRコードから「Kuro AI」を友だちに追加してください。</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h3>話しかける</h3>
+      <p>挨拶や質問、何でもいいのでメッセージを送ってみましょう。</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <h3>爆速回答</h3>
+      <p>Groq LPUによる圧倒的な速度で、AIがすぐに返信します。</p>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <div class="demo-grid">
+      <div class="demo-text">
+        <h3>多機能なLINE連携</h3>
+        <ul>
+          <li><strong>爆速テキスト回答</strong>：Groq APIによるリアルタイム応答</li>
+          <li><strong>音声で操作</strong>：Whisper搭載でボイスメッセージも理解</li>
+          <li><strong>画像で質問</strong>：写真を送るだけでAIが内容を分析</li>
+          <li><strong>忘れない記憶</strong>：過去の会話をふまえた賢いやり取り</li>
+        </ul>
+      </div>
+      <div class="demo-visual">
+        <!-- ここにスマホのモックアップ画像などを入れると映えます -->
+        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 30px; height: 300px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.3);">
+          LINE Interface Preview
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="qr-box">
+    <h3>今すぐ体験する</h3>
+    <p>以下のボタン、またはQRコードから追加できます。</p>
+    
+    <div class="qr-placeholder">
+      QR CODE
+    </div>
+
+    <a href="https://lin.ee/8cfyBpE" class="btn-line">
+      LINE友だち追加
+    </a>
+  </section>
+</div>
+
+<footer>
+  <p>© 2026 Kuro AI Project</p>
+</footer>
+
+</body>
+</html>

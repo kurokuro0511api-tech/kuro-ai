@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>記憶機能 - Kuro AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* 共通スタイル */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body { background: #050505; color: white; overflow-x: hidden; line-height: 1.6; }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 8%;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; }
+    .logo img { width: 40px; height: 40px; border-radius: 10px; background: white; padding: 2px; }
+    .logo h1 { font-size: 20px; font-weight: 900; }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 80px 8%; }
+
+    .sub-hero { text-align: center; margin-bottom: 80px; }
+    .sub-hero h2 { font-size: 58px; font-weight: 900; letter-spacing: -2px; margin-bottom: 24px; }
+    .sub-hero p { color: rgba(255,255,255,0.6); font-size: 20px; }
+
+    /* 記憶の繋がりをイメージした装飾 */
+    .memory-viz {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 50px;
+    }
+    .node {
+      width: 12px;
+      height: 12px;
+      background: white;
+      border-radius: 50%;
+      position: relative;
+      animation: glow 2s infinite alternate;
+    }
+    .node::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      width: 15px;
+      height: 1px;
+      background: rgba(255,255,255,0.2);
+    }
+    .node:last-child::after { display: none; }
+    @keyframes glow {
+      from { box-shadow: 0 0 5px rgba(255,255,255,0.2); transform: scale(1); }
+      to { box-shadow: 0 0 20px rgba(255,255,255,0.8); transform: scale(1.2); }
+    }
+
+    /* メインコンテンツ */
+    .memory-section {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 40px;
+      padding: 60px;
+      margin-bottom: 80px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+    }
+
+    .info-card h3 { font-size: 28px; margin-bottom: 20px; font-weight: 800; }
+    .info-card p { color: rgba(255,255,255,0.7); margin-bottom: 15px; }
+
+    /* チャットの履歴再現 */
+    .history-preview {
+      background: #000;
+      border-radius: 24px;
+      padding: 25px;
+      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 14px;
+    }
+    .history-item {
+      margin-bottom: 15px;
+      opacity: 0.6;
+    }
+    .history-item.highlight {
+      opacity: 1;
+      color: #00ff88;
+    }
+
+    .cta { text-align: center; padding: 60px 0; }
+    .btn-back { color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.2); }
+    .btn-back:hover { color: white; border-color: white; }
+
+    footer { text-align: center; padding: 60px; border-top: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.4); }
+
+    @media (max-width: 800px) {
+      .sub-hero h2 { font-size: 40px; }
+      .memory-section { padding: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">
+    <img src="kuro-icon.png" alt="Kuro AI">
+    <h1>Kuro AI</h1>
+  </a>
+</header>
+
+<div class="container">
+  <div class="memory-viz">
+    <div class="node"></div><div class="node"></div><div class="node"></div><div class="node"></div><div class="node"></div>
+  </div>
+
+  <section class="sub-hero">
+    <h2>話すほど、<br>あなたを理解する。</h2>
+    <p>Kuro AIは、過去の会話やあなたが教えたことを忘れません。<br>一貫性のある対話で、よりパーソナルな体験を提供します。</p>
+  </section>
+
+  <div class="memory-section">
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>コンテキスト共有</h3>
+        <p>「さっきの話だけど」といった曖昧な指示も、Kuroなら大丈夫。直前のやり取りを記憶しているため、スムーズに会話を続けられます。</p>
+        <p>開発の相談から日常の雑談まで、文脈を捉えた的確な回答を返します。</p>
+      </div>
+      <div class="info-card">
+        <div class="history-preview">
+          <div class="history-item">👤 「黒いパンダのアイコン作って」</div>
+          <div class="history-item">🤖 「承知いたしました！」</div>
+          <div class="history-item highlight">👤 「さっきの、もっとシンプルにして」</div>
+          <div class="history-item">🤖 「記憶を元に、2色のみで再構成します」</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-grid" style="margin-bottom: 80px;">
+    <div class="info-card" style="background: rgba(255,255,255,0.03); padding: 40px; border-radius: 32px;">
+      <h4 style="font-size: 22px; margin-bottom: 15px;">永続的なメモ機能</h4>
+      <p>大事な予定や忘れたくないアイデアをKuroに預けてください。「昨日のアイデアを教えて」と聞けば、いつでも引き出すことができます。</p>
+    </div>
+    <div class="info-card" style="background: rgba(255,255,255,0.03); padding: 40px; border-radius: 32px;">
+      <h4 style="font-size: 22px; margin-bottom: 15px;">プライバシーへの配慮</h4>
+      <p>記憶されたデータはあなたの利便性のためだけに活用されます。セキュアな環境で管理されており、安心してご利用いただけます。</p>
+    </div>
+  </div>
+
+  <div class="cta">
+    <a href="index.html" class="btn-back">← トップページへ戻る</a>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Kuro AI Project</p>
+</footer>
+
+</body>
+</html>
