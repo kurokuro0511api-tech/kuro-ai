@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>音声認識 - Kuro AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* 共通スタイル */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body { background: #050505; color: white; overflow-x: hidden; line-height: 1.6; }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 8%;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; }
+    .logo img { width: 40px; height: 40px; border-radius: 10px; background: white; padding: 2px; }
+    .logo h1 { font-size: 20px; font-weight: 900; }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 80px 8%; }
+
+    .sub-hero { text-align: center; margin-bottom: 100px; }
+    .sub-hero h2 { font-size: 58px; font-weight: 900; letter-spacing: -2px; margin-bottom: 24px; }
+    .sub-hero p { color: rgba(255,255,255,0.6); font-size: 20px; }
+
+    /* 音声波形風のアニメーション装飾 */
+    .visualizer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      height: 60px;
+      margin-bottom: 40px;
+    }
+    .bar {
+      width: 4px;
+      height: 20px;
+      background: white;
+      border-radius: 2px;
+      animation: wave 1s ease-in-out infinite;
+    }
+    .bar:nth-child(2n) { animation-delay: 0.2s; height: 40px; }
+    .bar:nth-child(3n) { animation-delay: 0.4s; height: 30px; }
+    @keyframes wave {
+      0%, 100% { transform: scaleY(1); }
+      50% { transform: scaleY(1.5); opacity: 0.5; }
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      margin-bottom: 100px;
+    }
+
+    .content-text h3 { font-size: 32px; margin-bottom: 24px; font-weight: 800; }
+    .content-text p { color: rgba(255,255,255,0.7); margin-bottom: 20px; font-size: 18px; }
+
+    .tech-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      font-size: 14px;
+      color: #00ff88;
+      margin-bottom: 15px;
+    }
+
+    .use-cases {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 60px;
+    }
+    .case-card {
+      padding: 40px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 32px;
+    }
+    .case-card .icon { font-size: 40px; margin-bottom: 20px; }
+    .case-card h4 { font-size: 22px; margin-bottom: 12px; }
+
+    .cta { text-align: center; padding: 100px 0; }
+    .btn-back { color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.2); }
+    .btn-back:hover { color: white; border-color: white; }
+
+    footer { text-align: center; padding: 60px; border-top: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.4); }
+
+    @media (max-width: 800px) {
+      .content-grid { grid-template-columns: 1fr; }
+      .sub-hero h2 { font-size: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">
+    <img src="kuro-icon.png" alt="Kuro AI">
+    <h1>Kuro AI</h1>
+  </a>
+</header>
+
+<div class="container">
+  <div class="visualizer">
+    <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+  </div>
+
+  <section class="sub-hero">
+    <div class="tech-badge">Whisper Large v3 搭載</div>
+    <h2>声で、<br>想いを伝える。</h2>
+    <p>キーボードを打つ必要はありません。<br>LINEのボイスメッセージを送るだけで、Kuroが即座に理解します。</p>
+  </section>
+
+  <section class="content-grid">
+    <div class="content-text">
+      <h3>圧倒的な認識精度</h3>
+      <p>OpenAIの開発した最新の音声認識モデル「Whisper」をシステムに統合。雑音の多い場所や、少し早口な言葉でも、驚くほど正確にテキストへ変換します。</p>
+      <p>変換されたテキストはそのままAIが解析。まるで対話しているようなスムーズなレスポンスを体験してください。</p>
+    </div>
+    <div class="content-visual">
+      <div style="background: linear-gradient(135deg, #111, #222); border: 1px solid rgba(255,255,255,0.1); border-radius: 40px; height: 350px; position: relative; padding: 30px;">
+        <div style="background: white; color: black; padding: 12px 20px; border-radius: 15px 15px 15px 0; width: 80%; margin-bottom: 20px; font-weight: 500;">
+          🎙️ (音声メッセージ)
+        </div>
+        <div style="background: #333; color: white; padding: 12px 20px; border-radius: 15px 15px 0 15px; width: 80%; margin-left: auto; text-align: right;">
+          「明日の予定を教えて」<br>
+          と聞き取りました！
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="use-cases">
+    <div class="case-card">
+      <div class="icon">🚶</div>
+      <h4>歩きながら</h4>
+      <p>立ち止まって文字を打つ必要はありません。マイクボタンを押して話すだけ。</p>
+    </div>
+    <div class="case-card">
+      <div class="icon">✍️</div>
+      <h4>議事録やメモに</h4>
+      <p>思いついたアイデアを声で送れば、Kuroが綺麗に書き起こして保存します。</p>
+    </div>
+    <div class="case-card">
+      <div class="icon">🍳</div>
+      <h4>手が離せない時に</h4>
+      <p>料理中や作業中でも、声だけで質問やタイマーの依頼が可能です。</p>
+    </div>
+  </section>
+
+  <div class="cta">
+    <a href="index.html" class="btn-back">← トップページへ戻る</a>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Kuro AI Project</p>
+</footer>
+
+</body>
+</html>
