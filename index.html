@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kuro AI - 公式サイト</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 100px;
+    }
+
+    body {
+      background: #050505;
+      color: #f5f5f5; /* 真っ白より少し目に優しい白 */
+      overflow-x: hidden;
+      line-height: 1.8; /* 行間を広げて読みやすく */
+      letter-spacing: 0.03em; /* 字間を少し空けて視認性アップ */
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.06), transparent 40%),
+        radial-gradient(circle at bottom left, rgba(255,255,255,0.04), transparent 40%);
+      z-index: -1;
+    }
+
+    /* --- ヘッダー --- */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 8%;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: white;
+    }
+
+    .logo img {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: white;
+      padding: 3px;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .logo img:hover { transform: scale(1.1) rotate(5deg); }
+    .logo h1 { font-size: 22px; font-weight: 900; }
+
+    /* ヘッダー右側 */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    nav { display: flex; gap: 32px; }
+    nav a {
+      color: rgba(255,255,255,0.85); /* メニューの文字を明るく */
+      text-decoration: none;
+      transition: .2s;
+      font-weight: 500;
+      font-size: 15px;
+    }
+    nav a:hover { color: white; }
+
+    /* --- ヘッダーボタン群 --- */
+    .header-buttons {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-header {
+      background: #00ff88;
+      color: #000;
+      padding: 10px 24px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+    .btn-header:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 20px rgba(0, 255, 136, 0.4);
+    }
+
+    /* 寄付（Ofuse）ボタン */
+    .btn-donate {
+      background: linear-gradient(135deg, #ff4b72, #ff7e5f);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      transition: 0.2s;
+      border: none;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 15px rgba(255, 75, 114, 0.3);
+    }
+    .btn-donate:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 25px rgba(255, 75, 114, 0.6);
+    }
+
+    /* --- ボタン --- */
+    .btn-main {
+      background: white;
+      color: black;
+      padding: 18px 36px;
+      border-radius: 999px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: .2s;
+      display: inline-block;
+    }
+    .btn-main:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(255,255,255,0.2); }
+
+    .btn-sub {
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05);
+      color: white;
+      padding: 18px 36px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: .2s;
+      display: inline-block;
+    }
+    .btn-sub:hover { background: rgba(255,255,255,0.1); }
+
+    /* --- Hero セクション --- */
+    .hero {
+      min-height: 85vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      padding: 60px 8%;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 24px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      background: #00ff88;
+      border-radius: 50%;
+      animation: pulse 1.2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
+      70% { opacity: .5; box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); }
+      100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
+    }
+
+    .hero h2 {
+      font-size: clamp(48px, 6vw, 82px);
+      line-height: 1.1;
+      font-weight: 900;
+      letter-spacing: -2px;
+      color: white;
+    }
+
+    .hero p {
+      margin-top: 24px;
+      font-size: 18px;
+      color: rgba(255,255,255,0.9); /* 文字をくっきり */
+      max-width: 560px;
+      font-weight: 500;
+    }
+
+    .buttons {
+      margin-top: 40px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .hero-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 38px;
+      padding: 34px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    }
+
+    .chat-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 20px;
+    }
+
+    .chat-header img {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: white;
+      padding: 4px;
+    }
+
+    .chat { display: flex; flex-direction: column; gap: 16px; }
+    .bubble {
+      padding: 14px 18px;
+      border-radius: 20px;
+      max-width: 85%;
+      font-size: 15px;
+      font-weight: 500;
+    }
+    .user { background: white; color: black; border-bottom-left-radius: 4px; }
+    .ai { background: #111; border: 1px solid rgba(255,255,255,0.08); margin-left: auto; border-bottom-right-radius: 4px; color: white;}
+
+    /* --- 共通セクションスタイル --- */
+    section { padding: 120px 8%; }
+    .section-title { text-align: center; margin-bottom: 60px; }
+    .section-title h3 { font-size: clamp(36px, 4vw, 52px); font-weight: 900; letter-spacing: -1px; color: white; }
+    .section-title p { color: #00ff88; margin-top: 12px; font-size: 16px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;}
+
+    /* --- コンセプト --- */
+    .concept {
+      background: rgba(255,255,255,0.02);
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .concept h3 { font-size: 32px; font-weight: 700; margin-bottom: 24px; line-height: 1.4; color: white; }
+    .concept p { color: rgba(255,255,255,0.9); max-width: 700px; margin: 0 auto; font-size: 18px; font-weight: 500;}
+
+    /* --- Features --- */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      padding: 40px 30px;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: .25s;
+    }
+    .feature-card:hover { transform: translateY(-8px); background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.2); }
+    .feature-card .icon { font-size: 48px; margin-bottom: 20px; }
+    .feature-card h4 { font-size: 22px; margin-bottom: 12px; font-weight: 700; color: white;}
+    .feature-card p { color: rgba(255,255,255,0.85); font-weight: 500; }
+
+    /* --- 活用シーン --- */
+    .usecase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .usecase-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.1);
+      aspect-ratio: 1 / 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 30px;
+      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent), rgba(255,255,255,0.05);
+    }
+    .usecase-card h4 { font-size: 20px; margin-bottom: 8px; z-index: 2; color: white;}
+    .usecase-card p { font-size: 15px; color: rgba(255,255,255,0.9); z-index: 2; font-weight: 500; }
+    .usecase-emoji { position: absolute; top: 20px; right: 20px; font-size: 64px; opacity: 0.2; z-index: 1; transition: .3s; }
+    .usecase-card:hover .usecase-emoji { opacity: 0.8; transform: scale(1.1); }
+
+    /* --- スピード比較 --- */
+    .speed-section { background: rgba(255,255,255,0.01); }
+    .chart-container { max-width: 800px; margin: 0 auto; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 40px; border-radius: 30px; }
+    .chart-row { margin-bottom: 30px; }
+    .chart-label { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 700; color: white; }
+    .bar-track { width: 100%; height: 24px; background: rgba(255,255,255,0.05); border-radius: 999px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 999px; }
+    .fill-kuro { background: #00ff88; width: 15%; box-shadow: 0 0 20px rgba(0,255,136,0.5); animation: loadKuro 2s ease-out forwards; }
+    .fill-other { background: rgba(255,255,255,0.3); width: 85%; animation: loadOther 2s ease-out forwards; }
+
+    @keyframes loadKuro { 0% { width: 0; } 100% { width: 15%; } }
+    @keyframes loadOther { 0% { width: 0; } 100% { width: 85%; } }
+
+    /* --- Tech Stack --- */
+    .tech-list { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+    .tech-item {
+      display: flex; gap: 24px; background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08); padding: 24px 34px; border-radius: 20px; align-items: center;
+    }
+    .tech-item h4 { font-size: 22px; margin-bottom: 6px; color: #00ff88;}
+    .tech-item p { color: rgba(255,255,255,0.9); font-size: 16px; font-weight: 500;}
+
+    /* --- FAQ --- */
+    .faq-list { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+    .faq-item { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); padding: 30px; border-radius: 20px; }
+    .faq-q { font-size: 18px; font-weight: 700; margin-bottom: 14px; display: flex; gap: 12px; color: white;}
+    .faq-q::before { content: "Q."; color: #00ff88; font-weight: 900; }
+    .faq-a { color: rgba(255,255,255,0.9); padding-left: 32px; font-weight: 500; }
+
+    /* --- Ofuse (寄付) セクション --- */
+    .support-section {
+      padding: 100px 8%;
+    }
+    .support-card {
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 50px 40px;
+      border-radius: 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .support-card::before {
+      content: "";
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.05), transparent 60%);
+      z-index: -1;
+    }
+    .support-card h3 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: white;
+    }
+    .support-card p {
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 30px;
+      font-size: 16px;
+      line-height: 1.8;
+      font-weight: 500;
+    }
+
+    /* --- ボトムCTA --- */
+    .bottom-cta {
+      text-align: center;
+      padding: 120px 20px;
+      background: radial-gradient(circle at center, rgba(0,255,136,0.05), transparent 60%);
+    }
+    .bottom-cta h2 { font-size: clamp(36px, 5vw, 64px); font-weight: 900; margin-bottom: 40px; letter-spacing: -2px; color: white;}
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+      padding: 60px 20px;
+      color: rgba(255,255,255,0.6);
+      font-size: 14px;
+    }
+
+    /* レスポンシブ */
+    @media(max-width: 1000px) {
+      .hero { grid-template-columns: 1fr; text-align: center; padding-top: 40px;}
+      .hero p { margin-left: auto; margin-right: auto; }
+      .buttons { justify-content: center; }
+      
+      nav { display: none; }
+      
+      /* ヘッダー右側ボタンのスマホ調整 */
+      .header-right { gap: 0; }
+      .btn-header { padding: 8px 16px; font-size: 12px; }
+      .btn-donate { padding: 8px 14px; font-size: 12px; }
+      /* スマホでは「応援する」の文字を隠してアイコンだけにするか、短くする */
+      .donate-text { display: none; }
+      
+      .tech-item { flex-direction: column; align-items: flex-start; gap: 12px;}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="#" class="logo">
+    <img src="kuro-icon.png" alt="Kuro AI" onerror="this.src='https://placehold.jp/111111/ffffff/100x100.png?text=K'">
+    <div>
+      <h1>Kuro AI</h1>
+    </div>
+  </a>
+
+  <!-- ヘッダー右側 -->
+  <div class="header-right">
+    <nav>
+      <a href="#concept">Concept</a>
+      <a href="#features">Features</a>
+      <a href="#usecases">Use Cases</a>
+      <a href="#tech">Tech Stack</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="header-buttons">
+      <!-- OFUSE（寄付）ボタン -->
+      <a href="https://ofuse.me/850ba430" class="btn-donate" target="_blank" rel="noopener noreferrer">
+        ☕️ <span class="donate-text">応援する</span>
+      </a>
+      <!-- LINE追加ボタン -->
+      <a href="https://lin.ee/8cfyBpE" class="btn-header">LINE追加</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div>
+    <div class="badge">
+      <div class="dot"></div>
+      System Online - Ready to chat
+    </div>
+
+    <h2>
+      Kuroと<br>
+      毎日話そう。
+    </h2>
+
+    <p>
+      LINEで使える爆速AIアシスタント。長文で語らない。極短文で、自然な相槌を。
+      画像も、音声も、あなたの名前も記憶する。
+      シンプルでかっこいい、新しい対話体験をその手に。
+    </p>
+
+    <div class="buttons">
+      <a href="https://lin.ee/8cfyBpE" class="btn-main">LINEで友だち追加</a>
+      <a href="#features" class="btn-sub">機能を見る</a>
+    </div>
+  </div>
+
+  <div class="hero-card">
+    <div class="chat-header">
+      <img src="kuro-icon.png" alt="Kuro AI" onerror="this.src='https://placehold.jp/111111/ffffff/100x100.png?text=K'">
+      <div>
+        <div style="font-weight: 700; font-size: 18px;">Kuro AI PRO</div>
+        <div style="color: #00ff88; font-size: 12px; display: flex; align-items: center; gap: 6px;">
+          <div style="width: 6px; height: 6px; background: #00ff88; border-radius: 50%;"></div> Active Now
+        </div>
+      </div>
+    </div>
+    <div class="chat">
+      <div class="bubble user">おはよー！今日暇？</div>
+      <div class="bubble ai">おはよう。ずっと暇だよ。</div>
+      <div class="bubble user">これ見て！（犬の画像）</div>
+      <div class="bubble ai">【画像】かわいい犬だね。</div>
+      <div class="bubble user">名前覚えてる？</div>
+      <div class="bubble ai">〇〇だろ？覚えてるよ。</div>
+      <div class="bubble user">リセットして！</div>
+      <div class="bubble ai">リセット完了。何話す？</div>
+    </div>
+  </div>
+</section>
+
+<!-- コンセプト -->
+<section class="concept" id="concept">
+  <p class="section-title" style="margin-bottom: 20px;">CONCEPT</p>
+  <h3>「AIの返信、長すぎませんか？」</h3>
+  <p>
+    従来のAIは、少し質問しただけで百科事典のような長文を返してきます。<br>
+    Kuro AIは違います。ルールは「基本一文、長くても二文」。<br>
+    「了解」「そうなんだ」といった相槌を交え、まるで親友とLINEしているかのような<br>
+    自然で心地よいテンポの会話を実現しました。
+  </p>
+</section>
+
+<!-- 特徴 -->
+<section class="features" id="features">
+  <div class="section-title">
+    <p>FEATURES</p>
+    <h3>Kuroの驚きの性能</h3>
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="icon">⚡️</div>
+      <h4>極短・爆速レスポンス</h4>
+      <p>AI特有の長ったらしい前置きは一切なし。Groqによる驚異的なスピードで、一言二言でサクッと返します。</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="icon">🎤</div>
+      <h4>音声入力対応</h4>
+      <p>LINEのボイスメッセージを送るだけ。高性能なWhisperが即座にテキスト化して意図を汲み取ります。</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="icon">🖼️</div>
+      <h4>画像認識 (Vision)</h4>
+      <p>カメラで撮った写真を送れば、何が写っているかを「一言で」スパッと教えてくれます。</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="icon">🧠</div>
+      <h4>ツンデレ記憶機能</h4>
+      <p>会話の中からあなたの名前を密かに学習。10%の気まぐれな確率で、突然名前を呼んでくれます。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 活用シーン -->
+<section class="use-cases" id="usecases" style="background: rgba(255,255,255,0.01);">
+  <div class="section-title">
+    <p>USE CASES</p>
+    <h3>こんなシーンで活躍します</h3>
+  </div>
+
+  <div class="usecase-grid">
+    <div class="usecase-card">
+      <div class="usecase-emoji">🚶‍♂️</div>
+      <h4>歩きながらのメモ</h4>
+      <p>スマホを打てない移動中。ボイスメッセージで「今日の夜ごはん鶏肉」と送るだけ。</p>
+    </div>
+    <div class="usecase-card">
+      <div class="usecase-emoji">🍳</div>
+      <h4>料理中の質問</h4>
+      <p>手が離せない時も音声で。「大さじ1って何グラム？」と聞けば一言で返してくれます。</p>
+    </div>
+    <div class="usecase-card">
+      <div class="usecase-emoji">🛍️</div>
+      <h4>外国語のパッケージ</h4>
+      <p>読めない商品の写真をパシャリ。「これ何味？」と送れば画像AIが即座に解析。</p>
+    </div>
+    <div class="usecase-card">
+      <div class="usecase-emoji">🛌</div>
+      <h4>夜の暇つぶし</h4>
+      <p>ただ誰かと話したい時。長文で諭してこないKuroは、最高の話し相手になります。</p>
+    </div>
+  </div>
+</section>
+
+<!-- スピード比較 -->
+<section class="speed-section">
+  <div class="section-title">
+    <p>SPEED</p>
+    <h3>圧倒的なレスポンス速度</h3>
+  </div>
+  <div class="chart-container">
+    <div class="chart-row">
+      <div class="chart-label">
+        <span>Kuro AI (Powered by Groq)</span>
+        <span style="color: #00ff88;">約 0.5秒</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill fill-kuro"></div>
+      </div>
+    </div>
+    <div class="chart-row" style="margin-bottom: 0;">
+      <div class="chart-label">
+        <span style="color: rgba(255,255,255,0.7);">一般的なAIアシスタント</span>
+        <span style="color: rgba(255,255,255,0.7);">3秒 〜 5秒+</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill fill-other"></div>
+      </div>
+    </div>
+    <p style="margin-top: 30px; text-align: center; color: rgba(255,255,255,0.6); font-size: 14px;">
+      ※APIの混雑状況により変動する場合がありますが、体感速度は圧倒的です。
+    </p>
+  </div>
+</section>
+
+<!-- 技術仕様 -->
+<section class="tech-stack" id="tech">
+  <div class="section-title">
+    <p>UNDER THE HOOD</p>
+    <h3>最先端のAIモデルを統合</h3>
+  </div>
+
+  <div class="tech-list">
+    <div class="tech-item">
+      <div>
+        <h4>Groq LPU™ Inference Engine</h4>
+        <p>世界最速クラスの推論エンジン。LINEを送った瞬間に返信が来る「爆速」を実現する心臓部です。</p>
+      </div>
+    </div>
+    <div class="tech-item">
+      <div>
+        <h4>Llama-3.3-70b-versatile</h4>
+        <p>テキスト処理の要。強力なシステムプロンプトにより「極短文」「挨拶不要」のルールを徹底し、自然な対話を生み出します。</p>
+      </div>
+    </div>
+    <div class="tech-item">
+      <div>
+        <h4>Llama-3.2-11b-vision-preview</h4>
+        <p>視覚（Vision）モデル。送信された画像データを瞬時に読み取り、状況を的確に言語化します。</p>
+      </div>
+    </div>
+    <div class="tech-item">
+      <div>
+        <h4>Whisper-large-v3-turbo</h4>
+        <p>音声認識モデル。送信されたボイスメッセージのノイズを取り除き、高精度でテキストに書き起こします。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq" style="background: rgba(255,255,255,0.01);">
+  <div class="section-title">
+    <p>Q & A</p>
+    <h3>よくあるご質問</h3>
+  </div>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">料金はかかりますか？</div>
+      <div class="faq-a">完全無料でご利用いただけます。LINEで友だち追加するだけですぐに会話を始められます。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">AIが名前を呼んでくれません。</div>
+      <div class="faq-a">Kuro AIはあなたの名前を記憶しますが、実際に名前を呼んでくれるのは「10%の確率」という気まぐれな仕様になっています。根気よく話しかけてみてください。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">会話履歴はどれくらい残りますか？</div>
+      <div class="faq-a">直近のやり取り（10回分）をコンテキストとして記憶しています。話題を変えたい時や全て消去したい場合は、チャットで「リセット」と送信してください。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 寄付・支援 (OFUSE) -->
+<section class="support-section">
+  <div class="support-card">
+    <h3>☕️ Kuro AIを応援しませんか？</h3>
+    <p>
+      Kuro AIは完全無料で提供していますが、超高速なレスポンスや画像・音声認識を維持するためには、裏側でAPI利用料やサーバー代などのコストがかかっています。<br>
+      もしKuro AIを気に入っていただけたら、ファンレター＆投げ銭サービス「OFUSE（オフセ）」を通じてご支援・ご寄付いただけますと、今後の開発・運営の大きな励みになります！
+    </p>
+    <a href="https://ofuse.me/850ba430" class="btn-main" target="_blank" rel="noopener noreferrer" style="padding: 16px 36px; font-size: 18px;">
+      OFUSEで応援・寄付する
+    </a>
+  </div>
+</section>
+
+<!-- Bottom CTA -->
+<section class="bottom-cta">
+  <h2>さあ、新しいAI体験を<br>始めよう。</h2>
+  <a href="https://lin.ee/8cfyBpE" class="btn-main" style="font-size: 20px; padding: 22px 48px;">
+    LINEで無料で使い始める
+  </a>
+  <p style="margin-top: 24px; color: rgba(255,255,255,0.7); font-weight: 500;">登録不要・1タップで追加完了</p>
+</section>
+
+<footer>
+  <h3 style="font-size: 24px; margin-bottom: 8px; color: white;">Kuro AI</h3>
+  <p>© 2026 Kuro AI Project | Developed by Api Kuro</p>
+</footer>
+
+</body>
+</html>
